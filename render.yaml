@@ -1,0 +1,23 @@
+# Agent Computer — Render (mode gratuit : veille auto + réveil à la demande)
+# La machine s'endort après ~15 min sans visite et se réveille toute seule
+# quand quelqu'un ouvre le site. Parfait pour un usage personnel à 0 €.
+#
+# Utilisation : Render → New → Blueprint (render.yaml) → connecter le dépôt Agent.
+services:
+  - type: web
+    name: agent-computer
+    runtime: docker
+    repo: https://github.com/BrunoRakotomalala62/Agent
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false        # à saisir dans le dashboard Render (secret)
+      - key: TERM_USER
+        sync: false
+      - key: TERM_PASS
+        sync: false
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8125
