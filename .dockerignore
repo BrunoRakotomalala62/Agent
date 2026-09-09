@@ -1,0 +1,10 @@
+.env
+.git
+.venv
+__pycache__
+*.pyc
+*.zip
+var/
+machine/home/agent/.bash_history
+Dockerfile
+.dockerignore
