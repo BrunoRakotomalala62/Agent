@@ -7,16 +7,23 @@ cd /opt/agent-computer
 export WS_DIR="${WS_DIR:-/opt/agent-computer/machine}"
 mkdir -p "$WS_DIR" /opt/agent-computer/var/log
 
-# 1) Dossier de travail : clone/pull du dépôt GitHub (mémoire durable) OU seed local
+# 1) Dossier de travail :
+#    - avec GITHUB_TOKEN → clone frais du dépôt (l'agent modifie le VRAI projet et pousse)
+#    - sans token        → simple dossier local (démo, non sauvegardé)
 if [ -n "${GITHUB_TOKEN:-}" ]; then
-  echo "→ Branchement GitHub pour sauvegarde automatique par l'agent…"
+  export WS_DIR="${WS_DIR:-/opt/workspace}"
+  echo "→ Workspace : ${REPO_URL:-Agent.git} cloné dans $WS_DIR (sauvegarde auto par l'agent)"
   GITHUB_TOKEN="$GITHUB_TOKEN" REPO_URL="${REPO_URL:-https://github.com/BrunoRakotomalala62/Agent.git}" \
     GIT_USER="${GIT_USER:-Agent Computer}" GIT_EMAIL="${GIT_EMAIL:-agent@computer.local}" \
     WS_DIR="$WS_DIR" bash /opt/agent-computer/scripts/git-autosetup.sh || echo "⚠️ branchement GitHub échoué"
-elif [ ! -f "$WS_DIR/LISEZMOI.txt" ] && [ ! -f "$WS_DIR/README.md" ]; then
-  echo "→ Pas de token GitHub : simple dossier de travail (non sauvegardé)."
-  cp -an /opt/agent-computer/machine/home/agent/. "$WS_DIR/" 2>/dev/null || true
-  [ -f "$WS_DIR/LISEZMOI.txt" ] || printf '# Bienvenue sur votre Agent Computer (conteneur)\n\nAjoutez GITHUB_TOKEN pour que l'\''agent sauvegarde automatiquement sur GitHub.\n' > "$WS_DIR/LISEZMOI.txt"
+else
+  export WS_DIR="${WS_DIR:-/opt/agent-computer/machine/home/agent}"
+  echo "→ Pas de token GitHub : dossier local (non sauvegardé) : $WS_DIR"
+  mkdir -p "$WS_DIR"
+  if [ ! -f "$WS_DIR/LISEZMOI.txt" ]; then
+    cp -an /opt/agent-computer/machine/home/agent/. "$WS_DIR/" 2>/dev/null || true
+    [ -f "$WS_DIR/LISEZMOI.txt" ] || printf '# Bienvenue sur votre Agent Computer (conteneur)\n\nAjoutez GITHUB_TOKEN pour que l'\''agent sauvegarde automatiquement sur GitHub.\n' > "$WS_DIR/LISEZMOI.txt"
+  fi
 fi
 
 # 2) Sécurité : mot de passe obligatoire pour le terminal intégré

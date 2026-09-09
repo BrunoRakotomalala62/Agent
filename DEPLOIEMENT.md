@@ -44,8 +44,8 @@ ouverture du site  →  réveil (2-5 s)  →  agent code dans le terminal intég
 3. Déployez → **un seul domaine** : portail + terminal intégré (mot de passe requis).
 
 **Gratuit** : dort après ~15 min, réveil à la prochaine visite (~30-60 s).
-⚠️ En gratuit : pas de disque persistant (les fichiers créés par l'agent sont perdus au
-sommeil ; les fichiers du dépôt, eux, sont relus à chaque réveil).
+⚠️ En gratuit : pas de disque persistant. Avec `GITHUB_TOKEN`, le conteneur clone le
+dépôt à chaque réveil : l'agent modifie, pousse (AGENTS.md), et rien n'est perdu.
 
 # ⚡ MODE 24/7
 
@@ -53,7 +53,8 @@ sommeil ; les fichiers du dépôt, eux, sont relus à chaque réveil).
 
 1. **railway.com** → **New Project → Deploy from GitHub repo** → `BrunoRakotomalala62/Agent`.
 2. **Variables** : `GEMINI_API_KEY`, `TERM_PASS`.
-3. **Volumes** : volume monté sur `/opt/agent-computer/machine` (votre disque).
+3. **Volumes** : volume monté sur `/opt/workspace` (votre disque — avec un token,
+   c'est un clone du dépôt ; sans token, fichiers locaux).
 4. **Settings → Public Networking** → domaine pour le port **8125** (un seul suffit,
    le terminal est dans la page).
 5. Déployez → `https://<app>.up.railway.app` : portail + terminal + agent.
