@@ -23,8 +23,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - >/dev/null 2>&1 \
  && npm install -g --silent opencode-ai >/dev/null 2>&1 || npm install -g --silent opencode \
  && rm -rf /var/lib/apt/lists/*
 
-# 3) Dépendances webapp (portail + terminal intégré)
-RUN pip install --no-cache-dir -q fastapi "uvicorn[standard]" >/dev/null
+# 3) Dépendances webapp (portail + terminal intégré + chat agent)
+RUN pip install --no-cache-dir -q fastapi "uvicorn[standard]" httpx >/dev/null
 
 # 4) Projet
 WORKDIR /opt/agent-computer
