@@ -54,6 +54,17 @@ sudo systemctl status agent-computer-portal agent-computer-ttyd agent-computer-w
 ⚠️ **Sécurisez l'accès** (le terminal donne un vrai shell !) : pare-feu (`ufw allow 22,80,443`),
 et idéalement un reverse-proxy nginx avec mot de passe devant les ports 8125/7681.
 
+## 2bis. 💬 Interface chat (recommandée)
+
+Le portail web a maintenant un onglet **Chat** : vous écrivez votre demande en
+français, et l'agent fait TOUT lui-même (il explore le code, le modifie, exécute
+les commandes, vérifie, commit et push). Aucune commande à taper.
+
+```bash
+# lancer la version tout-en-un (portail + chat + terminal) :
+GEMINI_API_KEY=votre_cle uvicorn webapp:app --host 0.0.0.0 --port 8125
+```
+
 ## 3. Rendre l'agent intelligent (le point important)
 
 Le moteur d'agent **opencode** (le même que Tembo utilise en interne) est inclus.

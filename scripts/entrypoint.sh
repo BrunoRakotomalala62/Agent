@@ -24,6 +24,12 @@ if [ -z "${TERM_PASS:-}" ]; then
   echo "⚠️  TERM_PASS non défini : le terminal intégré sera OUVERT (risqué en public) !"
 fi
 
-# 3) Un seul service : portail + terminal intégré (port ${PORT:-8125})
+# 3) Config opencode : modèle par défaut (évite le choix interactif au 1er lancement)
+mkdir -p "${HOME:-/root}/.config/opencode"
+if [ ! -f "${HOME:-/root}/.config/opencode/opencode.json" ]; then
+  printf '{"model":"google/gemini-3.6-flash"}\n' > "${HOME:-/root}/.config/opencode/opencode.json"
+fi
+
+# 4) Un seul service : portail + terminal intégré (port ${PORT:-8125})
 echo "→ Agent Computer (portail + terminal intégré) sur :${PORT:-8125} — dossier : $WS_DIR"
 exec env WS_DIR="$WS_DIR" python3 -m uvicorn webapp:app --host 0.0.0.0 --port "${PORT:-8125}"
