@@ -1,0 +1,13 @@
+[Unit]
+Description=Agent Computer — terminal web (ttyd)
+After=network.target
+
+[Service]
+WorkingDirectory=__ROOT__/machine/home/agent
+Environment=HOME=__ROOT__/machine/home/agent
+ExecStart=__ROOT__/bin/ttyd -p 7681 -W -t titleFixed='Agent Computer — terminal' bash -l
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

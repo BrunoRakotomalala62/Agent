@@ -1,0 +1,5 @@
+.env
+var/
+machine/home/agent/.git-credentials
+__pycache__/
+.bash_history

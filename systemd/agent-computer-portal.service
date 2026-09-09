@@ -1,0 +1,13 @@
+[Unit]
+Description=Agent Computer — portail web
+After=network.target
+
+[Service]
+WorkingDirectory=__ROOT__
+ExecStart=/usr/bin/python3 __ROOT__/portal.py --port 8125
+Restart=always
+RestartSec=5
+Environment=TTYD_PORT=7681
+
+[Install]
+WantedBy=multi-user.target

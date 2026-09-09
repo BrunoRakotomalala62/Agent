@@ -1,0 +1,7 @@
+# Bienvenue sur votre Agent Computer
+
+Le code stocké ici est sur VOTRE disque — il ne dort jamais.
+
+Commandes utiles depuis le terminal :
+  git clone <votre-depot> .
+  ls -la

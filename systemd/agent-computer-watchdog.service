@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Computer — watchdog (auto-réparation)
+After=network.target
+
+[Service]
+WorkingDirectory=__ROOT__
+ExecStart=__ROOT__/scripts/watchdog.sh
+Restart=always
+RestartSec=5
+Environment=PORT=8125
+Environment=TTYD_PORT=7681
+
+[Install]
+WantedBy=multi-user.target
