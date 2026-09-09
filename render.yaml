@@ -13,10 +13,14 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false        # à saisir dans le dashboard Render (secret)
-      - key: TERM_USER
-        sync: false
       - key: TERM_PASS
         sync: false
+      - key: GITHUB_TOKEN
+        sync: false        # pour que l'AGENT pousse automatiquement après chaque modif
+      - key: GIT_USER
+        value: Agent Computer
+      - key: GIT_EMAIL
+        value: agent@computer.local
       - key: HOST
         value: 0.0.0.0
       - key: PORT

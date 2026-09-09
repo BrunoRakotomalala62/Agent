@@ -34,7 +34,7 @@ from pydantic import BaseModel
 
 ROOT = Path(__file__).parent
 MACHINE = ROOT / "machine"
-HOME_DIR = MACHINE / "home" / "agent"
+HOME_DIR = Path(os.environ.get("WS_DIR") or (ROOT / "machine" / "home" / "agent"))
 VAR = ROOT / "var"
 START = time.time()
 

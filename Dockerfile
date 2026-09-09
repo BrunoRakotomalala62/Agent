@@ -4,9 +4,13 @@ FROM python:3.12-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PORT=8125 \
-    MACHINE_DIR=/opt/agent-computer/machine/home/agent \
+    WS_DIR=/opt/agent-computer/machine \
     GEMINI_API_KEY="" \
-    TERM_PASS=""
+    TERM_PASS="" \
+    GITHUB_TOKEN="" \
+    GIT_USER="Agent Computer" \
+    GIT_EMAIL="agent@computer.local" \
+    REPO_URL="https://github.com/BrunoRakotomalala62/Agent.git"
 
 # 1) Outils système
 RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
@@ -30,7 +34,8 @@ RUN chmod +x scripts/entrypoint.sh
 COPY machine/home/agent/ machine/home/agent/
 RUN chmod +x scripts/*.sh && mkdir -p var/log
 
-# 5) Volume persistant (le code survit aux redéploiements/redémarrages)
+# 5) Volume persistant (sur Railway : le code survit ; sur Render free : la
+#    sauvegarde est assurée par le push automatique de l'agent sur GitHub)
 VOLUME ["/opt/agent-computer/machine"]
 
 EXPOSE 8125
